@@ -1,20 +1,18 @@
-import re
 from typing import Dict, List
+from urllib.parse import urlparse 
 
 elems: List[List[str]] = []
 with open("example.csv","r") as file:
   for line in file:
     elems.append(line.split(','))
 
-
 def parse_URI(uri: str) -> str | None:
-  pattern = r"http(s?):\/\/www.(([a-z]|[A-Z]|[0-9])*([.\-_]?([a-z]|[A-Z]|[0-9])*)*)"
-  result = re.match(
-      pattern,
-      uri,
-      )
+  parsed_uri = urlparse(uri)
+  result = parsed_uri.netloc
+  
+
   if result is not None:
-    return result.groups()[1]
+    return result
   else:
     return None
 
